@@ -1,50 +1,147 @@
-# Welcome to your Expo app 👋
+# MindEase Mobile
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+Aplicativo mobile (Expo + React Native) para produtividade com foco em:
 
-## Get started
+- gerenciamento de tarefas em colunas (`todo`, `in-progress`, `done`)
+- timer de foco estilo Pomodoro
+- configurações de acessibilidade com persistência local
 
-1. Install dependencies
+## Stack
 
-   ```bash
-   npm install
-   ```
+- `expo` 54
+- `react` 19 / `react-native` 0.81
+- `expo-router` (roteamento por arquivos)
+- `@react-native-async-storage/async-storage` (persistência)
+- `lucide-react-native` + `@expo/vector-icons` (ícones)
+- `typescript` (strict)
+- `jest` + `jest-expo` + `@testing-library/react-native` (testes)
 
-2. Start the app
+## Requisitos
 
-   ```bash
-   npx expo start
-   ```
+- Node.js 20+ recomendado
+- npm 10+ recomendado
+- Expo Go no dispositivo (ou emulador Android/iOS)
 
-In the output, you'll find options to open the app in a
+## Setup
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
+1. Instalar dependências
 
 ```bash
-npm run reset-project
+npm install --legacy-peer-deps
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+2. Rodar o app
 
-## Learn more
+```bash
+npm run start
+```
 
-To learn more about developing your project with Expo, look at the following resources:
+Atalhos:
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+- Android: `npm run android`
+- iOS: `npm run ios`
+- Web: `npm run web`
 
-## Join the community
+## Scripts
 
-Join our community of developers creating universal apps.
+- `npm run start`: inicia dev server Expo
+- `npm run android`: abre no Android
+- `npm run ios`: abre no iOS
+- `npm run web`: abre no web
+- `npm run lint`: lint com configuração Expo
+- `npm run lint:fix`: tenta corrigir lint automaticamente
+- `npm run format`: formata codigo com Prettier
+- `npm run format:check`: valida formatação
+- `npm test`: executa testes Jest
+- `npm run test:watch`: testes em watch mode
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+## Arquitetura
+
+O projeto segue separação em camadas:
+
+### 1) `domain/`
+
+Regra de negócio pura e contratos:
+
+- entidades (`Task`, `TaskStatus`, etc.)
+- repositórios (interfaces)
+- use-cases (`list`, `move`, `toggle-checklist`)
+
+### 2) `application/`
+
+Orquestração de caso de uso com detalhes de app:
+
+- `AddTask` (criação com `id` e `createdAt`)
+
+### 3) `infrastructure/`
+
+Implementações concretas:
+
+- repositório em `AsyncStorage`
+- composição de dependências em `infrastructure/di/tasks.ts`
+
+### 4) `presentation/`
+
+UI, hooks e estado de tela:
+
+- componentes (`ui/`, `tasks/`)
+- hooks de view model (`use-*.ts`)
+- estilos por tela/componente (`*.styles.ts`)
+- contexto de acessibilidade
+
+### 5) `app/`
+
+Entradas de rota (`expo-router`):
+
+- `app/_layout.tsx`
+- `app/(tabs)/*` (dashboard, tasks, pomodoro, profile, settings)
+
+## Decisões técnicas
+
+### Persistência
+
+- `AsyncStorage` para:
+  - tarefas: chave `mindease:tasks`
+  - acessibilidade: chave `mindease:accessibility`
+
+### Estado e lógica de tela
+
+- lógica concentrada em hooks (`use-tasks`, `use-pomodoro`, `use-settings-view-model`, etc.)
+- componentes focam em renderização e callbacks
+
+### Estilização
+
+- React Native `StyleSheet` em arquivos dedicados `*.styles.ts`
+- tema centralizado em `presentation/theme/mindease-theme.ts`
+
+### Acessibilidade
+
+- contexto global com persistência (`presentation/contexts/accessibility-context.tsx`)
+- hook derivado `use-accessibility-ui` converte settings em escala de fonte/espaçamento/contraste
+
+### Testes
+
+- `jest-expo` como preset
+- `@testing-library/react-native` para hooks/componentes
+- foco atual em regras de negócio e hooks principais
+
+## Estrutura de pastas (resumo)
+
+```
+app/
+  _layout.tsx
+  index.tsx
+  (tabs)/
+    _layout.tsx
+    dashboard.tsx
+    tasks.tsx
+    pomodoro.tsx
+    profile.tsx
+    settings.tsx
+
+src/
+  application/
+  domain/
+  infrastructure/
+  presentation/
+```
