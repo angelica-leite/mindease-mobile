@@ -5,11 +5,24 @@ import { LinearGradient } from 'expo-linear-gradient';
 type Props = PropsWithChildren<{
   onPress?: () => void;
   leftIcon?: ReactNode;
+  accessibilityLabel?: string;
+  accessibilityHint?: string;
 }>;
 
-export function MindEasePrimaryButton({ children, onPress, leftIcon }: Props) {
+export function MindEasePrimaryButton({
+  children,
+  onPress,
+  leftIcon,
+  accessibilityLabel,
+  accessibilityHint,
+}: Props) {
   return (
-    <Pressable onPress={onPress}>
+    <Pressable
+      onPress={onPress}
+      accessibilityRole="button"
+      accessibilityLabel={accessibilityLabel}
+      accessibilityHint={accessibilityHint}
+    >
       <LinearGradient
         colors={['#36a58f', '#3bb6bc']}
         start={{ x: 0, y: 0 }}

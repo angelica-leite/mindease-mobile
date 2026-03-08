@@ -48,6 +48,7 @@ export function AddTaskModal({ open, onOpenChange, onAdd }: Readonly<Props>) {
       transparent
       animationType={settings.reducedMotion ? 'none' : 'fade'}
       onRequestClose={() => onOpenChange(false)}
+      accessibilityViewIsModal
     >
       <SafeAreaView style={styles.keyboardAvoiding} edges={['top', 'bottom']}>
         <KeyboardAvoidingView
@@ -72,6 +73,8 @@ export function AddTaskModal({ open, onOpenChange, onAdd }: Readonly<Props>) {
                   placeholderTextColor={mindeaseTheme.color.mutedForeground}
                   style={styles.input}
                   autoFocus
+                  accessibilityLabel="Titulo da tarefa"
+                  accessibilityHint="Digite o nome da tarefa"
                 />
               </View>
 
@@ -84,6 +87,8 @@ export function AddTaskModal({ open, onOpenChange, onAdd }: Readonly<Props>) {
                   placeholderTextColor={mindeaseTheme.color.mutedForeground}
                   style={[styles.input, styles.multiline]}
                   multiline
+                  accessibilityLabel="Descricao da tarefa"
+                  accessibilityHint="Opcional. Adicione detalhes da tarefa"
                 />
               </View>
 
@@ -113,15 +118,26 @@ export function AddTaskModal({ open, onOpenChange, onAdd }: Readonly<Props>) {
                   placeholder="25"
                   placeholderTextColor={mindeaseTheme.color.mutedForeground}
                   style={styles.input}
+                  accessibilityLabel="Tempo estimado em minutos"
+                  accessibilityHint="Digite apenas numeros para tempo estimado"
                 />
               </View>
 
               <View style={styles.footer}>
-                <Pressable style={styles.cancelButton} onPress={() => onOpenChange(false)}>
+                <Pressable
+                  style={styles.cancelButton}
+                  onPress={() => onOpenChange(false)}
+                  accessibilityRole="button"
+                  accessibilityLabel="Cancelar criacao de tarefa"
+                >
                   <Text style={styles.cancelText}>Cancelar</Text>
                 </Pressable>
                 <View style={styles.fill}>
-                  <MindEasePrimaryButton onPress={() => void form.submit()}>
+                  <MindEasePrimaryButton
+                    onPress={() => void form.submit()}
+                    accessibilityLabel="Criar tarefa"
+                    accessibilityHint="Salva a nova tarefa com os dados preenchidos"
+                  >
                     Criar tarefa
                   </MindEasePrimaryButton>
                 </View>

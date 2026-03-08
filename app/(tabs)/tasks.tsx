@@ -31,7 +31,10 @@ export default function TasksScreen() {
         ]}
       >
         <View>
-          <Text style={[styles.title, { fontSize: a11y.font(30), color: a11y.textColor }]}>
+          <Text
+            accessibilityRole="header"
+            style={[styles.title, { fontSize: a11y.font(30), color: a11y.textColor }]}
+          >
             Minhas tarefas
           </Text>
           {!a11y.summaryMode ? (
@@ -44,7 +47,13 @@ export default function TasksScreen() {
         {error ? (
           <MindEaseCard style={{ borderColor: a11y.cardBorderColor }}>
             <Text style={styles.errorText}>Erro ao carregar tarefas: {error}</Text>
-            <Pressable style={styles.retryButton} onPress={() => void reload()}>
+            <Pressable
+              style={styles.retryButton}
+              onPress={() => void reload()}
+              accessibilityRole="button"
+              accessibilityLabel="Tentar novamente"
+              accessibilityHint="Recarrega a lista de tarefas"
+            >
               <Text style={[styles.retryText, { color: a11y.textColor }]}>Tentar novamente</Text>
             </Pressable>
           </MindEaseCard>

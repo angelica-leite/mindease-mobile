@@ -75,7 +75,12 @@ export default function SettingsScreen() {
         ]}
       >
         <View>
-          <Text style={[styles.title, { fontSize: a11y.font(30), color: a11y.textColor }]}>{text.title}</Text>
+          <Text
+            accessibilityRole="header"
+            style={[styles.title, { fontSize: a11y.font(30), color: a11y.textColor }]}
+          >
+            {text.title}
+          </Text>
           <Text style={[styles.subtitle, { color: a11y.mutedTextColor }]}>{text.subtitle}</Text>
         </View>
 
@@ -128,7 +133,13 @@ export default function SettingsScreen() {
               />
               <Text style={styles.label}>{text.reducedMotionLabel}</Text>
             </View>
-            <Switch value={settings.reducedMotion} onValueChange={setReducedMotion} />
+            <Switch
+              value={settings.reducedMotion}
+              onValueChange={setReducedMotion}
+              accessibilityRole="switch"
+              accessibilityLabel={text.reducedMotionLabel}
+              accessibilityHint="Ativa ou desativa animacoes"
+            />
           </View>
 
           <View style={styles.switchRow}>
@@ -140,7 +151,13 @@ export default function SettingsScreen() {
               />
               <Text style={styles.label}>{text.simplifiedViewLabel}</Text>
             </View>
-            <Switch value={settings.simplifiedView} onValueChange={setSimplifiedView} />
+            <Switch
+              value={settings.simplifiedView}
+              onValueChange={setSimplifiedView}
+              accessibilityRole="switch"
+              accessibilityLabel={text.simplifiedViewLabel}
+              accessibilityHint="Simplifica elementos visuais nao essenciais"
+            />
           </View>
         </MindEaseCard>
 

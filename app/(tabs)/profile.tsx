@@ -24,7 +24,10 @@ export default function ProfileScreen() {
         ]}
       >
         <View>
-          <Text style={[styles.title, { fontSize: a11y.font(30), color: a11y.textColor }]}>
+          <Text
+            accessibilityRole="header"
+            style={[styles.title, { fontSize: a11y.font(30), color: a11y.textColor }]}
+          >
             {profile.title}
           </Text>
           {!a11y.summaryMode ? (

@@ -25,7 +25,10 @@ export default function DashboardScreen() {
       >
         <View style={styles.hero}>
           <View>
-            <Text style={[styles.title, { fontSize: a11y.font(30), color: a11y.textColor }]}>
+            <Text
+              accessibilityRole="header"
+              style={[styles.title, { fontSize: a11y.font(30), color: a11y.textColor }]}
+            >
               {ui.title}
             </Text>
             {!a11y.summaryMode ? (
@@ -78,6 +81,8 @@ export default function DashboardScreen() {
         <View style={[styles.focusButtonWrap, { marginTop: a11y.space(30) }]}>
           <MindEasePrimaryButton
             onPress={() => router.push('/(tabs)/pomodoro')}
+            accessibilityLabel="Iniciar foco"
+            accessibilityHint="Abre a tela de timer pomodoro"
             leftIcon={
               <Sparkles
                 size={16}

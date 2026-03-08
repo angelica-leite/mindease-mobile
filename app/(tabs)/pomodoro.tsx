@@ -1,6 +1,7 @@
 import { BellOff, Droplets, Pause, Play, Sun } from 'lucide-react-native/icons';
-import { Pressable, ScrollView, Text, View } from 'react-native';
+import { AccessibilityInfo, Pressable, ScrollView, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { useEffect } from 'react';
 
 import { MindEaseCard } from '@/src/presentation/components/ui/mindease-card';
 import { MindEasePrimaryButton } from '@/src/presentation/components/ui/mindease-primary-button';
@@ -56,6 +57,18 @@ export default function PomodoroScreen() {
   const { formattedTime, isRunning, phase, startWork, reset, skip, progress, completedCycles } =
     controller;
 
+  useEffect(() => {
+    const label =
+      phase === 'idle'
+        ? 'Pomodoro pronto para iniciar'
+        : phase === 'work'
+          ? 'Fase de foco iniciada'
+          : phase === 'shortBreak'
+            ? 'Pausa curta iniciada'
+            : 'Pausa longa iniciada';
+    void AccessibilityInfo.announceForAccessibility(label);
+  }, [phase]);
+
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: a11y.backgroundColor }]} edges={['bottom']}>
       <ScrollView
@@ -65,7 +78,10 @@ export default function PomodoroScreen() {
         ]}
       >
         <View style={styles.header}>
-          <Text style={[styles.title, { fontSize: a11y.font(30), color: a11y.textColor }]}>
+          <Text
+            accessibilityRole="header"
+            style={[styles.title, { fontSize: a11y.font(30), color: a11y.textColor }]}
+          >
             {heading.title}
           </Text>
           {!a11y.summaryMode ? (
@@ -94,6 +110,8 @@ export default function PomodoroScreen() {
                   />
                 }
                 onPress={startWork}
+                accessibilityLabel="Iniciar foco"
+                accessibilityHint="Inicia o ciclo de foco do pomodoro"
               >
                 Iniciar foco
               </MindEasePrimaryButton>
@@ -101,6 +119,8 @@ export default function PomodoroScreen() {
               <>
                 <MindEasePrimaryButton
                   onPress={pauseOrResume}
+                  accessibilityLabel={isRunning ? 'Pausar timer' : 'Retomar timer'}
+                  accessibilityHint="Controla o andamento do timer"
                   leftIcon={
                     isRunning ? (
                       <Pause
@@ -122,10 +142,20 @@ export default function PomodoroScreen() {
                   {isRunning ? 'Pausar' : 'Retomar'}
                 </MindEasePrimaryButton>
                 <View style={styles.controlsRow}>
-                  <Pressable style={styles.secondaryButton} onPress={skip}>
+                  <Pressable
+                    style={styles.secondaryButton}
+                    onPress={skip}
+                    accessibilityRole="button"
+                    accessibilityLabel="Pular fase"
+                  >
                     <Text style={styles.secondaryButtonText}>Pular</Text>
                   </Pressable>
-                  <Pressable style={styles.secondaryButton} onPress={reset}>
+                  <Pressable
+                    style={styles.secondaryButton}
+                    onPress={reset}
+                    accessibilityRole="button"
+                    accessibilityLabel="Resetar timer"
+                  >
                     <Text style={styles.secondaryButtonText}>Resetar</Text>
                   </Pressable>
                 </View>
