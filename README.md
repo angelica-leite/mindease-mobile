@@ -145,3 +145,15 @@ src/
   infrastructure/
   presentation/
 ```
+
+## CI/CD
+
+- CI em `.github/workflows/ci.yml`
+  - Triggers: `pull_request` e `push` nas branches principais (`main`, `master`, `develop`)
+  - Passos atuais: `npm ci --legacy-peer-deps`, `npm run lint`, `npx tsc --noEmit`, `npm test -- --runInBand`
+  - Objetivo: bloquear merge com regressao de qualidade (lint, tipo e testes)
+
+- CD em `.github/workflows/cd.yml`
+  - Trigger principal: `workflow_run` apos CI bem-sucedido em `main/master`
+  - Trigger manual: `workflow_dispatch`
+  - Passos: `npm ci --legacy-peer-deps`, `npx expo export --platform web --output-dir dist-web`, upload de artefato (`dist-web`)
