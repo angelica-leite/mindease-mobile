@@ -2,6 +2,7 @@
 
 Aplicativo mobile (Expo + React Native) para produtividade com foco em:
 
+- Fluxo de autenticação
 - gerenciamento de tarefas em colunas (`todo`, `in-progress`, `done`)
 - timer de foco estilo Pomodoro
 - configurações de acessibilidade com persistência local
