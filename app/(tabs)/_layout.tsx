@@ -1,12 +1,28 @@
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { Settings, SquareCheck, Timer, User } from 'lucide-react-native/icons';
-import { Tabs } from 'expo-router';
-import { View } from 'react-native';
+import { Redirect, Tabs, usePathname } from 'expo-router';
+import { ActivityIndicator, View } from 'react-native';
 
 import { MobileNav } from '@/src/presentation/layouts/mobile-nav';
+import { useAuth } from '@/src/presentation/hooks/use-auth';
 import { mindeaseTheme } from '@/src/presentation/theme/mindease-theme';
 
 export default function TabsLayout() {
+  const pathname = usePathname();
+  const { isAuthenticated, isLoading } = useAuth();
+
+  if (isLoading) {
+    return (
+      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+        <ActivityIndicator color={mindeaseTheme.color.primary} />
+      </View>
+    );
+  }
+
+  if (!isAuthenticated) {
+    return <Redirect href={{ pathname: '/login', params: { next: pathname } } as any} />;
+  }
+
   return (
     <View style={{ flex: 1 }}>
       <MobileNav />

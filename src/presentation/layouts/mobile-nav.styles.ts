@@ -25,4 +25,17 @@ export const mobileNavStyles = StyleSheet.create({
     justifyContent: 'center',
   },
   brandText: { color: mindeaseTheme.color.foreground, fontWeight: '700', fontSize: 18 },
+  logoutButton: {
+    borderWidth: 1,
+    borderColor: mindeaseTheme.color.border,
+    borderRadius: 999,
+    paddingHorizontal: 14,
+    paddingVertical: 6,
+    backgroundColor: '#ffffff',
+  },
+  logoutText: {
+    color: mindeaseTheme.color.mutedForeground,
+    fontWeight: '700',
+    fontSize: 13,
+  },
 });
