@@ -1,0 +1,57 @@
+import { StyleSheet } from 'react-native';
+
+import { mindeaseTheme } from '@/src/presentation/theme/mindease-theme';
+
+export const pomodoroStyles = StyleSheet.create({
+  container: { flex: 1, backgroundColor: mindeaseTheme.color.background },
+  content: { padding: 18, gap: 14, paddingBottom: 24 },
+  header: { alignItems: 'center' },
+  title: { fontSize: 30, fontWeight: '800', color: mindeaseTheme.color.foreground },
+  subtitle: { color: mindeaseTheme.color.mutedForeground },
+  timerCard: { alignItems: 'center', paddingVertical: 28 },
+  phaseLabel: { color: mindeaseTheme.color.mutedForeground, fontWeight: '700' },
+  timerText: { fontSize: 64, fontWeight: '800', color: mindeaseTheme.color.foreground },
+  progressTrack: {
+    marginTop: 10,
+    width: '100%',
+    height: 8,
+    borderRadius: 999,
+    backgroundColor: mindeaseTheme.color.muted,
+    overflow: 'hidden',
+  },
+  progressFill: {
+    height: 8,
+    borderRadius: 999,
+    backgroundColor: mindeaseTheme.color.primary,
+  },
+  controls: { marginTop: 14, width: '100%', gap: 8 },
+  controlsRow: { flexDirection: 'row', gap: 8 },
+  secondaryButton: {
+    flex: 1,
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: mindeaseTheme.color.border,
+    backgroundColor: '#fff',
+    paddingVertical: 10,
+    alignItems: 'center',
+  },
+  secondaryButtonText: { color: mindeaseTheme.color.foreground, fontWeight: '700' },
+  indicators: { flexDirection: 'row', gap: 6, marginTop: 10 },
+  indicatorBase: { width: 10, height: 10, borderRadius: 999 },
+  indicatorDone: { backgroundColor: mindeaseTheme.color.primary },
+  indicatorPending: { backgroundColor: mindeaseTheme.color.muted },
+  footerText: { marginTop: 6, color: mindeaseTheme.color.mutedForeground, fontSize: 12 },
+  tipsWrap: { gap: 10 },
+  tipCard: { flexDirection: 'row', alignItems: 'center', gap: 12 },
+  tipIconWrap: {
+    width: 42,
+    height: 42,
+    borderRadius: 12,
+    backgroundColor: '#dff4ef',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  tipTextWrap: { flex: 1 },
+  tipTitle: { fontWeight: '700', color: mindeaseTheme.color.foreground },
+  tipDescription: { color: mindeaseTheme.color.mutedForeground },
+});
