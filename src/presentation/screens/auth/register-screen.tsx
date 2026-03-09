@@ -4,18 +4,20 @@ import {
   ActivityIndicator,
   KeyboardAvoidingView,
   Platform,
-  SafeAreaView,
   ScrollView,
   Text,
   TextInput,
   View,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { MindEaseCard } from '@/src/presentation/components/ui/mindease-card';
 import { MindEasePrimaryButton } from '@/src/presentation/components/ui/mindease-primary-button';
 import { useAuth } from '@/src/presentation/hooks/use-auth';
 import { authStyles as styles } from '@/src/presentation/screens/auth/auth.styles';
 import { mindeaseTheme } from '@/src/presentation/theme/mindease-theme';
+import { Brain } from 'lucide-react-native/icons';
+import { mobileNavStyles } from '../../layouts/mobile-nav.styles';
 
 export function RegisterScreen() {
   const router = useRouter();
@@ -61,10 +63,14 @@ export function RegisterScreen() {
       >
         <ScrollView contentContainerStyle={styles.content} keyboardShouldPersistTaps="handled">
           <MindEaseCard style={styles.card}>
-            <Text style={styles.brand}>MindEase</Text>
+            <View style={styles.brandRow}>
+              <View style={mobileNavStyles.brandIconWrapper}>
+                <Brain size={18} color={mindeaseTheme.color.primaryForeground} strokeWidth={2} />
+              </View>
+              <Text style={styles.brand}>MindEase</Text>
+            </View>{' '}
             <Text style={styles.title}>Criar conta</Text>
             <Text style={styles.subtitle}>Monte seu perfil e acompanhe seu progresso.</Text>
-
             <View style={styles.form}>
               <View style={styles.field}>
                 <Text style={styles.label}>Nome</Text>
@@ -106,7 +112,6 @@ export function RegisterScreen() {
                   secureTextEntry
                   textContentType="newPassword"
                 />
-                <Text style={styles.hint}>Use uma senha com pelo menos 6 caracteres.</Text>
               </View>
 
               {error ? <Text style={styles.error}>{error}</Text> : null}
@@ -119,9 +124,8 @@ export function RegisterScreen() {
                 {isSubmitting ? 'Cadastrando...' : 'Cadastrar'}
               </MindEasePrimaryButton>
             </View>
-
             <View style={styles.footerRow}>
-              <Text style={styles.footerText}>Ja tem conta?</Text>
+              <Text style={styles.footerText}>Já tem conta?</Text>
               <Link href={'/login' as Href} style={styles.footerLink}>
                 Entrar
               </Link>

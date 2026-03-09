@@ -22,6 +22,13 @@ export const authStyles = StyleSheet.create({
     color: mindeaseTheme.color.foreground,
     textAlign: 'center',
   },
+  brandRow: {
+    marginBottom: 24,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 12,
+  },
   title: {
     fontSize: 24,
     fontWeight: '700',

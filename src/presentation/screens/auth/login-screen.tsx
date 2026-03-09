@@ -14,8 +14,10 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { MindEaseCard } from '@/src/presentation/components/ui/mindease-card';
 import { MindEasePrimaryButton } from '@/src/presentation/components/ui/mindease-primary-button';
 import { useAuth } from '@/src/presentation/hooks/use-auth';
+import { mobileNavStyles } from '@/src/presentation/layouts/mobile-nav.styles';
 import { authStyles as styles } from '@/src/presentation/screens/auth/auth.styles';
 import { mindeaseTheme } from '@/src/presentation/theme/mindease-theme';
+import { Brain } from 'lucide-react-native/icons';
 
 function resolveRedirectPath(next: string | string[] | undefined) {
   if (typeof next !== 'string') {
@@ -59,7 +61,7 @@ export function LoginScreen() {
 
     const result = await login({ email, password });
     if (!result.ok) {
-      setError(result.error ?? 'Nao foi possivel entrar.');
+      setError(result.error ?? 'Não foi possível entrar.');
       setIsSubmitting(false);
       return;
     }
@@ -75,7 +77,12 @@ export function LoginScreen() {
       >
         <ScrollView contentContainerStyle={styles.content} keyboardShouldPersistTaps="handled">
           <MindEaseCard style={styles.card}>
-            <Text style={styles.brand}>MindEase</Text>
+            <View style={styles.brandRow}>
+              <View style={mobileNavStyles.brandIconWrapper}>
+                <Brain size={18} color={mindeaseTheme.color.primaryForeground} strokeWidth={2} />
+              </View>
+              <Text style={styles.brand}>MindEase</Text>
+            </View>
             <Text style={styles.title}>Entrar</Text>
             <Text style={styles.subtitle}>Organize sua rotina com foco e leveza.</Text>
 
@@ -120,7 +127,7 @@ export function LoginScreen() {
             </View>
 
             <View style={styles.footerRow}>
-              <Text style={styles.footerText}>Nao tem conta?</Text>
+              <Text style={styles.footerText}>Não tem conta?</Text>
               <Link href={'/cadastro' as Href} style={styles.footerLink}>
                 Criar cadastro
               </Link>

@@ -1,11 +1,12 @@
 import { BellOff, Droplets, Pause, Play, Sun } from 'lucide-react-native/icons';
 import { AccessibilityInfo, Pressable, ScrollView, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 
 import { MindEaseCard } from '@/src/presentation/components/ui/mindease-card';
 import { MindEasePrimaryButton } from '@/src/presentation/components/ui/mindease-primary-button';
 import { useAccessibilityUI } from '@/src/presentation/hooks/use-accessibility-ui';
+import { useFocusStats } from '@/src/presentation/hooks/use-focus-stats';
 import {
   PomodoroTip,
   usePomodoroPageViewModel,
@@ -54,8 +55,10 @@ export default function PomodoroScreen() {
     cyclesUntilLongBreak,
   } = usePomodoroPageViewModel();
   const a11y = useAccessibilityUI();
+  const { registerCompletedSession } = useFocusStats();
   const { formattedTime, isRunning, phase, startWork, reset, skip, progress, completedCycles } =
     controller;
+  const previousCycles = useRef(0);
 
   useEffect(() => {
     const label =
@@ -68,6 +71,15 @@ export default function PomodoroScreen() {
             : 'Pausa longa iniciada';
     void AccessibilityInfo.announceForAccessibility(label);
   }, [phase]);
+
+  useEffect(() => {
+    if (completedCycles > previousCycles.current) {
+      const diff = completedCycles - previousCycles.current;
+      void registerCompletedSession(diff, 25);
+    }
+
+    previousCycles.current = completedCycles;
+  }, [completedCycles, registerCompletedSession]);
 
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: a11y.backgroundColor }]} edges={['bottom']}>
