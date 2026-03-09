@@ -1,16 +1,25 @@
-import { User } from 'lucide-react-native/icons';
-import { ScrollView, Text, View } from 'react-native';
+import { LogOut, User } from 'lucide-react-native/icons';
+import { Pressable, ScrollView, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { MindEaseCard } from '@/src/presentation/components/ui/mindease-card';
 import { useAccessibilityUI } from '@/src/presentation/hooks/use-accessibility-ui';
+import { useAuth } from '@/src/presentation/hooks/use-auth';
 import { useProfileViewModel } from '@/src/presentation/hooks/use-profile-view-model';
 import { profileStyles as styles } from '@/src/presentation/screens/profile.styles';
 import { mindeaseTheme } from '@/src/presentation/theme/mindease-theme';
+import { Href, router } from 'expo-router';
 
 export default function ProfileScreen() {
   const { stats, profile } = useProfileViewModel();
   const a11y = useAccessibilityUI();
+
+  const { logout } = useAuth();
+
+  async function handleLogout() {
+    await logout();
+    router.replace('/login' as Href);
+  }
 
   return (
     <SafeAreaView
@@ -80,6 +89,10 @@ export default function ProfileScreen() {
             <Text style={[styles.statLabel, { color: a11y.mutedTextColor }]}>Foco</Text>
           </MindEaseCard>
         </View>
+        <Pressable style={styles.logoutButton} onPress={() => void handleLogout()}>
+          <LogOut color={styles.iconLogoutButton.color} />
+          <Text style={styles.logoutText}>Sair da conta</Text>
+        </Pressable>
       </ScrollView>
     </SafeAreaView>
   );
